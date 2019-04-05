@@ -1,6 +1,7 @@
 package com.labs1904.lightordering.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.NullValueCheckStrategy;
 
 import com.labs1904.lightordering.dto.UserDto;
 import com.labs1904.lightordering.entity.UserEntity;
