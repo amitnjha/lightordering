@@ -1,7 +1,5 @@
 package com.labs1904.lightordering;
 
-import java.util.Random;
-
 import org.apache.commons.lang.RandomStringUtils;
 
 import com.labs1904.lightordering.dto.UserDto;
@@ -14,7 +12,7 @@ public class TestDataUtils {
 		dto.setEmail(RandomStringUtils.randomAlphabetic(10));
 		dto.setFirstName(RandomStringUtils.randomAlphanumeric(10));
 		dto.setLastName(RandomStringUtils.randomAlphanumeric(10));
-		dto.setId((new Random().nextInt()));
+		//dto.setId((new Random().nextInt()));
 		return dto;
 	
 	}

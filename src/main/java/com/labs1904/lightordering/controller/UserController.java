@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.labs1904.lightordering.dto.UserDto;
 import com.labs1904.lightordering.entity.UserEntity;
+import com.labs1904.lightordering.exception.ServerErrorException;
 import com.labs1904.lightordering.mapper.UserMapper;
 import com.labs1904.lightordering.repository.UserRepository;
 
@@ -43,10 +44,10 @@ public class UserController {
 	@Transactional
 	@ApiOperation("Creates a new User")
 	@RequestMapping(path = "/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDto> createUser(@RequestBody UserDto request){
+	public ResponseEntity<UserDto> createUser(@RequestBody UserDto request) throws Exception{
 		List<UserEntity> existingUsers = userRepository.findByEmail(request.getEmail());
-		if (existingUsers.size() > 1) {
-			throw new DuplicateKeyException(String.format("Found existing users with email %s %d",request.getEmail(), existingUsers.size()));
+		if (existingUsers.size() > 0) {
+			throw new ServerErrorException(String.format("Found existing users with email %s %d",request.getEmail(), existingUsers.size()));//HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR,String.format("Found existing users with email %s %d",request.getEmail(), existingUsers.size()));
 		}
 		UserEntity entity = userRepository.save(userMapper.dtoToEntity(request));
 		return new ResponseEntity<>(userMapper.entityToDto(entity), HttpStatus.CREATED);
